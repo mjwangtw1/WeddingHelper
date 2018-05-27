@@ -1,0 +1,22 @@
+{
+  "name": "weddinghelper",
+  "version": "1.0.0",
+  "description": "A Simple Wedding Helper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjwangtw1/WeddingHelper.git"
+  },
+  "author": "Mou-Chun Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjwangtw1/WeddingHelper/issues"
+  },
+  "homepage": "https://github.com/mjwangtw1/WeddingHelper#readme",
+  "dependencies": {
+    "request": "^2.87.0"
+  }
+}
