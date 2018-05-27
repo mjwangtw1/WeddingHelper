@@ -4,3 +4,4 @@ aws lambda update-function-code \
 --region=us-west-2 \
 --function-name=WeddingHelper
 
+#This File need to be executable
