@@ -1,4 +1,5 @@
 var rp = require('request-promise');
+var request = require('request');
 var aws = require('aws-sdk');
 
 exports.handler = function (req, res) {
