@@ -1,20 +1,43 @@
-exports.handler = (event, context, callback) => {
-    // TODO implement
+var rp = require('request-promise');
 
-    const ChannelAccessToken = process.env.CHANNEL_ACCESS_TOKEN;
+exports.handler = function (req, res) {
 
-    console.log('Yolo~Debugging');
-    console.log(event);
+    const promises = req.events.map(event => {
 
-    var reply_token = event.replyToken; //Need to get this Token to pass back.
-    var messages = [{
-        "type":"text",
-       // "text": event.message.text
-        "text":"我李奧94崩"
-    }];
+        var msg = event.message.text;
+        var reply_token = event.replyToken;
+        const ChannelAccessToken = process.env['CHANNEL_ACCESS_TOKEN'];
 
+        var options = {
+            method: 'POST',
+            uri: "https://api.line.me/v2/bot/message/reply",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": " Bearer " + ChannelAccessToken
+            },
+            json: true,
+            body: {
+                replyToken: reply_token,
+                messages:[
+                    {
+                        "type":"text",
+                        "text": msg + ' This is the Wedding helper'
+                    }
+                ]
+            }
+        };
 
+        return rp(options)
+            .then(function (response) {
+                console.log("Success : " + response);
+            }).catch(function (err) {
+                console.log("Error : " + err);
+            });
 
+    });
 
-    callback(null, messages);
+    Promise
+        .all(promises)
+        .then(() => res.json({success: true}));
+
 };
