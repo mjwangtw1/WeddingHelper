@@ -1,40 +1,54 @@
-//var rp = require('request-promise');
-var request = require('request');
+var rp = require('request-promise');
 
 exports.handler = function (req, res) {
 
-    console.log('Now try Simple request 1134');
     console.log(req);
 
-    //const ChannelAccessToken = process.env.CHANNEL_ACCESS_TOKEN;
-    const replyUrl = 'https://api.line.me/v2/bot/message/reply';
+    const promises = req.events.map(event => {
 
-    var messages = [
-        {
-            "type":"text",
-            "text": '9527 calling...'
-        }
-    ];
+        var msg = event.message.text.toUpperCase();
+        // var reply_token = event.replyToken;
+        // const ChannelAccessToken = process.env.CHANNEL_ACCESS_TOKEN;
 
-    //Make get Request
-    var requestSettings  = {
-        url: replyUrl,
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            "Authorization": " Bearer " + process.env.CHANNEL_ACCESS_TOKEN
-        },
-        method: 'POST',
-        encoding: null,
-        json: true,
-        body: {
-            replyToken: req.events.replyToken,
-            messages
-        }
-    };
+        console.log('I am here');
 
+        var messages = [
+            {
+                "type":"text",
+                "text": msg
+            }
+        ];
 
-    request(requestSettings, function(error, response, body) {
-        //make a request
-        console.log('request completed');
+        needToReply = true;
+
+        if(needToReply){
+
+            var options = {
+                method: 'POST',
+                uri: "https://api.line.me/v2/bot/message/reply",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": " Bearer " + process.env.CHANNEL_ACCESS_TOKEN
+                },
+                json: true,
+                body: {
+                    replyToken: event.replyToken,
+                    messages
+                }
+            };
+
+            return rp(options)
+                .then(function (response) {
+                    console.log("Success : " + response);
+                }).catch(function (err) {
+                    console.log("Error : " + err);
+                });
+
+        }//Otherwiese no need to reply
     });
+
+    Promise
+        .all(promises)
+        .then(() => res.json({success: true}));
+
 };
