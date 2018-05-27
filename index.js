@@ -17,7 +17,7 @@ exports.handler = function (req, res) {
 
     //Make get Request
     var requestSettings  = {
-        url: content_url,
+        url: replyUrl,
         headers: {
             "Content-type": "application/json; charset=UTF-8",
             "Authorization": " Bearer " + ChannelAccessToken
