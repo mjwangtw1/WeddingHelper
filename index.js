@@ -1,23 +1,69 @@
 var rp = require('request-promise');
+var aws = require('aws-sdk');
 
 exports.handler = function (req, res) {
 
     console.log(req);
 
+    var S3Imagebucket = 'q3buxya';
+
     const promises = req.events.map(event => {
 
         var msg = event.message.text.toUpperCase();
-        // var reply_token = event.replyToken;
-        // const ChannelAccessToken = process.env.CHANNEL_ACCESS_TOKEN;
 
         console.log('I am here');
 
-        var messages = [
+        var replyMessages = [
             {
                 "type":"text",
                 "text": msg
             }
         ];
+
+        //User pass-in images
+        if(event.message.type == 'image')
+        {
+            gotUserMessage = false;
+            var img_id = event.message.id;
+            content_url = "https://api.line.me/v2/bot/message/" + img_id + "/content";
+
+            //Make get Request
+            var requestSettings  = {
+                url: content_url,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": " Bearer " + process.env.CHANNEL_ACCESS_TOKEN
+                },
+                method: 'GET',
+                encoding: null
+            };
+
+            request(requestSettings, function(error, response, body) {
+                // Use body as a binary Buffer
+                //imageName = 'WeddingHelper/L30/photos/' + img_id + '.jpg';
+
+                imageName = img_id + '.jpg';
+
+                //Here Upload to S3
+                var s3Bucket = new AWS.S3({params:{Bucket:S3Imagebucket} });
+                var data = {
+                    Key: imageName,
+                    Body: body,
+                    ContentType: "image/jpeg"
+                };
+
+                s3Bucket.upload(data, function(err, data){
+                    if (err)
+                    { console.log('Error uploading data: ', data);}
+                    else
+                    {
+                        console.log('Successfully uploaded the image! Yo');
+                    }
+                });
+            });//end of request
+
+            msg = 'PhotoUploaded!';
+        }//endif;
 
         needToReply = true;
 
@@ -33,7 +79,7 @@ exports.handler = function (req, res) {
                 json: true,
                 body: {
                     replyToken: event.replyToken,
-                    messages
+                    replyMessages
                 }
             };
 
