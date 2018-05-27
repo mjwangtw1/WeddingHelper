@@ -73,9 +73,9 @@ exports.handler = function (req, res) {
             }
         ];
 
-        needToReply = true;
-
-        if(needToReply){
+        // needToReply = true;
+        //
+        // if(needToReply){
 
             var options = {
                 method: 'POST',
@@ -98,7 +98,7 @@ exports.handler = function (req, res) {
                     console.log("Error : " + err);
                 });
 
-        }//Otherwiese no need to reply
+        // }//Otherwiese no need to reply
     });
 
     Promise
