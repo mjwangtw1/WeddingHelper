@@ -1,4 +1,13 @@
 exports.handler = (event, context, callback) => {
     // TODO implement
-    callback(null, 'Hi I am Wedding Helper! 婚禮是不是讓人崩呢? QQ!');
+
+    const ChannelAccessToken = process.env.CHANNEL_ACCESS_TOKEN;
+
+    var reply_token = event.replyToken; //Need to get this Token to pass back.
+    var messages = [{
+        "type":"text",
+        "text": event.message.text
+    }];
+
+    callback(null, messages);
 };
