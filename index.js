@@ -27,7 +27,7 @@ exports.handler = function (req, res) {
         encoding: null,
         json: true,
         body: {
-            replyToken: events.replyToken,
+            replyToken: req.events.replyToken,
             messages
         }
     };
