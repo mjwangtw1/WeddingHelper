@@ -66,7 +66,7 @@ exports.handler = function (req, res) {
         }//end of Switch case
 
 
-        var replyMessages = [
+        var messages = [
             {
                 "type":"text",
                 "text": msg
@@ -87,7 +87,7 @@ exports.handler = function (req, res) {
                 json: true,
                 body: {
                     replyToken: event.replyToken,
-                    replyMessages
+                    messages
                 }
             };
 
