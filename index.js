@@ -64,7 +64,8 @@ exports.handler = function (req, res) {
 
                 });//end of request
 
-                msg = '相片已上傳 <br/>' + URL_PATH + S3Imagebucket + imageName;
+                msg = '已幫您上傳照片 :)';
+                // msg = '相片已上傳 <br/>' + URL_PATH + S3Imagebucket + imageName;
                 needToReply = true;
                 break;
 
