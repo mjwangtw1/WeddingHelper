@@ -6,7 +6,8 @@ exports.handler = function (req, res) {
 
     console.log(req);
 
-    var S3Imagebucket = 'pepebot-images'; //Flip back first.
+    var S3Imagebucket = 'q3buxya'; //Flip back first.
+    var EXPORT_PATH = 'WeddingHelper/L30/photos/';
 
     const promises = req.events.map(event => {
 
@@ -47,7 +48,7 @@ exports.handler = function (req, res) {
 
                     s3Bucket.upload(data, function(err, data){
 
-                        console.log('inside Upload');
+                        // console.log('inside Upload');
 
                         if (err)
                         { console.log('Error uploading data: ', data);}
@@ -57,18 +58,11 @@ exports.handler = function (req, res) {
                         }
                     });
 
-                    console.log('Upload Over');
+                    // console.log('Upload Over');
 
                 });//end of request
 
                 msg = 'PhotoUploaded!';
-
-                    // return rp(options) //Making the POST call.
-                    // .then(function (response) {
-                    //     console.log("ImageUpload Success : " + response);
-                    // }).catch(function (err) {
-                    //     console.log("ImageUpload Error : " + err);
-                    // });
 
                 break;
 
