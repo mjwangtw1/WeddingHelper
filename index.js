@@ -12,6 +12,7 @@ exports.handler = function (req, res) {
     const promises = req.events.map(event => {
 
         console.log('I am here 1108');
+        var needToReply = false;
 
         switch(event.message.type)
         {
@@ -62,8 +63,8 @@ exports.handler = function (req, res) {
 
                 });//end of request
 
-                msg = 'PhotoUploaded!';
-
+                msg = '相片已上傳';
+                needToReply = true;
                 break;
 
             default:
@@ -72,6 +73,7 @@ exports.handler = function (req, res) {
         }//end of Switch case
 
 
+        if(needToReply){
             var messages = [
                 {
                     "type":"text",
@@ -99,6 +101,7 @@ exports.handler = function (req, res) {
                 }).catch(function (err) {
                     console.log("Error : " + err);
                 });
+        }
     });
 
     Promise
