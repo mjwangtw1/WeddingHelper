@@ -8,6 +8,7 @@ exports.handler = function (req, res) {
 
     var S3Imagebucket = 'q3buxya'; //Flip back first.
     var EXPORT_PATH = 'WeddingHelper/L30/photos/';
+    var URL_PATH = 'https://s3-us-west-2.amazonaws.com/';
 
     const promises = req.events.map(event => {
 
@@ -63,7 +64,7 @@ exports.handler = function (req, res) {
 
                 });//end of request
 
-                msg = '相片已上傳';
+                msg = '相片已上傳 <br/>' + URL_PATH + S3Imagebucket + imageName;
                 needToReply = true;
                 break;
 
