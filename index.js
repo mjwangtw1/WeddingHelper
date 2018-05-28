@@ -46,6 +46,9 @@ exports.handler = function (req, res) {
                     };
 
                     s3Bucket.upload(data, function(err, data){
+
+                        console.log('inside Upload');
+
                         if (err)
                         { console.log('Error uploading data: ', data);}
                         else
@@ -53,9 +56,20 @@ exports.handler = function (req, res) {
                           console.log('Successfully uploaded the image! Yo');
                         }
                     });
+
+                    console.log('Upload Over');
+
                 });//end of request
 
                 msg = 'PhotoUploaded!';
+
+                    // return rp(options) //Making the POST call.
+                    // .then(function (response) {
+                    //     console.log("ImageUpload Success : " + response);
+                    // }).catch(function (err) {
+                    //     console.log("ImageUpload Error : " + err);
+                    // });
+
                 break;
 
             default:
@@ -64,16 +78,12 @@ exports.handler = function (req, res) {
         }//end of Switch case
 
 
-        var messages = [
-            {
-                "type":"text",
-                "text": msg
-            }
-        ];
-
-        // needToReply = true;
-        //
-        // if(needToReply){
+            var messages = [
+                {
+                    "type":"text",
+                    "text": msg
+                }
+            ];
 
             var options = {
                 method: 'POST',
@@ -95,8 +105,6 @@ exports.handler = function (req, res) {
                 }).catch(function (err) {
                     console.log("Error : " + err);
                 });
-
-        // }//Otherwiese no need to reply
     });
 
     Promise
