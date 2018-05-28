@@ -19,10 +19,8 @@ exports.handler = function (req, res) {
                 break;
 
             case 'image':
-                // var msg = 'You Send an Image';
-                // gotUserMessage = false;
-                var img_id = event.message.id;
-                content_url = "https://api.line.me/v2/bot/message/" + img_id + "/content";
+            var img_id = event.message.id;
+               content_url = "https://api.line.me/v2/bot/message/" + img_id + "/content";
 
                 //Make get Request
                 var requestSettings  = {
@@ -37,11 +35,10 @@ exports.handler = function (req, res) {
 
                 request(requestSettings, function(error, response, body) {
                     // Use body as a binary Buffer
-                    //imageName = 'WeddingHelper/L30/photos/' + img_id + '.jpg';
                     imageName = img_id + '.jpg';
 
                     //Here Upload to S3
-                    var s3Bucket = new AWS.S3({params:{Bucket:S3Imagebucket} });
+                    var s3Bucket = new AWS.S3({params:{Bucket:S3Imagebucket}});
                     var data = {
                         Key: imageName,
                         Body: body,
@@ -53,7 +50,7 @@ exports.handler = function (req, res) {
                         { console.log('Error uploading data: ', data);}
                         else
                         {
-                            console.log('Successfully uploaded the image! Yo');
+                          console.log('Successfully uploaded the image! Yo');
                         }
                     });
                 });//end of request
