@@ -6,11 +6,11 @@ exports.handler = function (req, res) {
 
     console.log(req);
 
-    var S3Imagebucket = 'q3buxya';
+    var S3Imagebucket = 'pepebot-images'; //Flip back first.
 
     const promises = req.events.map(event => {
 
-        console.log('I am here');
+        console.log('I am here 1108');
 
         switch(event.message.type)
         {
