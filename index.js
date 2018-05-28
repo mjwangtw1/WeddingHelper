@@ -14,6 +14,7 @@ exports.handler = function (req, res) {
 
         console.log('I am here 1108');
         var needToReply = false;
+        var smile = false;
 
         switch(event.message.type)
         {
@@ -64,9 +65,10 @@ exports.handler = function (req, res) {
 
                 });//end of request
 
-                msg = '已幫您上傳照片 :)';
+                msg = '已幫您上傳照片 : )';
                 // msg = '相片已上傳 <br/>' + URL_PATH + S3Imagebucket + imageName;
                 needToReply = true;
+                smile = true;
                 break;
 
             default:
@@ -82,6 +84,13 @@ exports.handler = function (req, res) {
                     "text": msg
                 }
             ];
+
+            //Add a Leo Smile face after Upload
+            if(smile){
+                messages[1].type = "image";
+                messages[1].originalContentUrl = 'https://i.imgur.com/e2AUPxc.png';
+                messages[1].previewImageUrl = 'https://i.imgur.com/e2AUPxc.png';
+            }
 
             var options = {
                 method: 'POST',
