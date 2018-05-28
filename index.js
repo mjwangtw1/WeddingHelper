@@ -8,6 +8,7 @@ exports.handler = function (req, res) {
 
     var S3Imagebucket = 'q3buxya'; //Flip back first.
     var EXPORT_PATH = 'WeddingHelper/L30/photos/';
+    var EXPORT_JSON = 'WeddingHelper/L30/web/';
     var URL_PATH = 'https://s3-us-west-2.amazonaws.com/';
 
     const promises = req.events.map(event => {
@@ -51,8 +52,6 @@ exports.handler = function (req, res) {
 
                     s3Bucket.upload(data, function(err, data){
 
-                        // console.log('inside Upload');
-
                         if (err)
                         { console.log('Error uploading data: ', data);}
                         else
@@ -61,11 +60,52 @@ exports.handler = function (req, res) {
                         }
                     });
 
+                    //Generate List Json
+                    var params = {
+                        Bucket: S3Imagebucket, 
+                        MaxKeys: 500
+                    };
+                    s3Bucket.listObjects(params, function(err, data) {
+                       if (err)
+                       {
+                          console.log(err, err.stack);
+                          callback(err);
+                        //Toss back error
+                       }else{
+
+                          console.log('data');
+                          console.log(data);
+
+                          var images = [];
+                          var result = data.Contents.forEach(function(item, index, array){
+                            images.push(item.Key);
+                          });
+
+                          images.reverse();
+
+                          // callback(null, images);
+
+                          s3Bucket.putObject(
+                          {
+                            Bucket: S3Imagebucket,
+                            Key: EXPORT_JSON + 'images.json',
+                            Body: JSON.stringify(images),
+                            ContentType: 'application/json'
+                          },function(err){
+                            console.log('Err!');
+                            console.log(err);
+                          });   
+
+                          console.log('Write JSON complete');
+                       }// an error occurred
+                    });
+
+
                     // console.log('Upload Over');
 
                 });//end of request
 
-                msg = '已幫您上傳照片, cc';
+                msg = '已幫您上傳照片, : )';
                 // msg = '相片已上傳 <br/>' + URL_PATH + S3Imagebucket + imageName;
                 needToReply = true;
                 // smile = true;
