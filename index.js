@@ -36,7 +36,7 @@ exports.handler = function (req, res) {
 
                 request(requestSettings, function(error, response, body) {
                     // Use body as a binary Buffer
-                    imageName = img_id + '.jpg';
+                    imageName = EXPORT_PATH + img_id + '.jpg';
 
                     //Here Upload to S3
                     var s3Bucket = new AWS.S3({params:{Bucket:S3Imagebucket}});
