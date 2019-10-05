@@ -105,7 +105,7 @@ exports.handler = function (req, res) {
 
                 });//end of request
 
-                msg = '已幫您上傳照片, : )';
+                msg = '已幫您上傳照片, :) , 請到 https://m0u.work/wed 觀看相簿';
                 // msg = '相片已上傳 <br/>' + URL_PATH + S3Imagebucket + imageName;
                 needToReply = true;
                 // smile = true;
