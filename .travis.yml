@@ -1,15 +1,19 @@
 language: node_js
 node_js:
 - '8.10'
+python:
+- "3.6"
 env:
   global:
-  - AWS_ACCESS_KEY_ID=AKIAJS2YQNJFZB22K4RQ
   - AWS_DEFAULT_REGION=us-west-2
   - secure: Z6XyeiaPMwKtJcEwiDLSMCcVWTwZr3m74emAYdpBOwnajrdh/WA9kN4ZT96y01/falFiD6VK6Qc6zRwLmmxMOJvoAkfwKDcPD/MPxbbKkhfETDuePl1fqSJ07pTDxZy7YwjdBSSTtURSJ/17DXKuRGxYwZsBRwDnaJeJ/0OHilcHJ3fVn6hm418Wj0wSCUzGrEaapb71eNo7kqAw15Y1kT9V8AHaYN27ZrSCJxw/FdLDJq13R+OjOv75e52AUNsa/+0uco6npPcVQqEj4wzG5nb+AsyVOOxoho9z40heer1unGU6SdWo2Bz5k7KWIo5LeDAieZ63E1iS70QqEbsq/5GzKRi70bPgYsN9Zka5rbBImXDVMBl5RshaES0GnSWhqUI+oTi6O81HYrDUHNMC5ISVo4T6c/9hKjPzdt8MFVbvD+xQxTvBng2Day5bFwqKMfaOYrU0IGgWLzSfMqqbavAf71db6hQFigT7e/ZhaXCdsXky6EfiXVrw7fjZQL3WkCOZDFagfjjaZyQnt4zVaqNP+LpKWL5NIpICAr3I/O33hAWIefEUKCIN5olSk3f9+Az0C4GcMVI8Wsa6TvuRiMH13ZLjOOhAIaTI+tdFpjTqVtUWNhAmFjg66inR1Z61T1ru1EgVWy3aVsn8p7mzyzVY4YK5q7iNBM17PK/TAbA=
 branches:
   only:
   - master
 before_install:
-- pip install --user awscli
-- export PATH=$PATH:$HOME/.local/bin
+  - sudo apt-get -y install python3-pip python-dev
+  - python3 -V
+  - pip3 -V
+  - pip3 install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
 script: make build
